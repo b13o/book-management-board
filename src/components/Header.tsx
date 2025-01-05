@@ -1,6 +1,11 @@
+import { Book } from "@/types";
 import CreateBookDialog from "./CreateBookDialog";
 
-const Header = () => {
+type HeaderProps = {
+  createBook: (newBook: Book) => void;
+};
+
+const Header = ({ createBook }: HeaderProps) => {
   return (
     <div className="space-y-8">
       <h1 className="text-5xl font-bold">Book Management Board</h1>
@@ -16,7 +21,7 @@ const Header = () => {
       >
         ダミーボタン
       </Button> */}
-      <CreateBookDialog />
+      <CreateBookDialog createBook={createBook} />
     </div>
   );
 };

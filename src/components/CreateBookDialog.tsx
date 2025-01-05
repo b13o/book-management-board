@@ -1,5 +1,3 @@
-import { createBook } from "@/utils/api";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import {
   Dialog,
@@ -12,20 +10,13 @@ import { Button } from "./ui/button";
 import { Plus } from "lucide-react";
 import { Label } from "./ui/label";
 import { Input } from "./ui/input";
+import { Book } from "@/types";
 
-const CreateBookDialog = () => {
-  const queryClient = useQueryClient();
+type CreateBookDialogProps = {
+  createBook: (newBook: Book) => void;
+};
 
-  const { mutate } = useMutation({
-    // データ更新のメイン処理
-    mutationFn: createBook,
-
-    // 成功時の処理
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["books"] });
-    },
-  });
-
+const CreateBookDialog = ({ createBook }: CreateBookDialogProps) => {
   // 追加
   const [open, setOpen] = useState(false);
   const [title, setTitle] = useState("");
@@ -33,7 +24,7 @@ const CreateBookDialog = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!title.trim() || !author.trim()) return;
-    mutate({
+    createBook({
       id: crypto.randomUUID(),
       title,
       author,

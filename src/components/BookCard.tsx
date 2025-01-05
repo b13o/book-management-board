@@ -10,19 +10,13 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "./ui/dialog";
-import { deleteBook } from "@/utils/api";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-const BookCard = ({ book }: { book: Book }) => {
-  const queryClient = useQueryClient();
+type BookCardProps = {
+  book: Book;
+  deleteBook: (id: string) => void;
+};
 
-  const { mutate } = useMutation({
-    mutationFn: deleteBook,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["books"] });
-    },
-  });
-
+const BookCard = ({ book, deleteBook }: BookCardProps) => {
   return (
     <Card
       className="p-4 mb-3 border-gray-400 shadow bg-stone-100 cursor-grab active:cursor-grabbing hover:animate-card-hover transition-all"
@@ -53,7 +47,7 @@ const BookCard = ({ book }: { book: Book }) => {
             <DialogDescription>
               『{book.title}"』を、本当に削除してもよろしいですか?
             </DialogDescription>
-            <Button onClick={() => mutate(book.id)}>
+            <Button onClick={() => deleteBook(book.id)}>
               <DialogClose>Delete</DialogClose>
             </Button>
           </DialogContent>

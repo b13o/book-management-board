@@ -1,11 +1,18 @@
-import { fetchBooks, updateBook } from "@/utils/api";
 import { COLUMNS } from "../constants";
 import { Book, BookStatus } from "../types";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import BookCard from "./BookCard";
 
 type BoardColumnProps = {
   status: BookStatus;
+  books: Book[];
+  updateBook: ({
+    id,
+    newStatus,
+  }: {
+    id: string;
+    newStatus: BookStatus;
+  }) => void;
+  deleteBook: (id: string) => void;
 };
 
 const BoardColumn = (props: BoardColumnProps) => {
@@ -13,57 +20,7 @@ const BoardColumn = (props: BoardColumnProps) => {
   const label = columnData?.label;
   const title = columnData?.title;
 
-  const queryClient = useQueryClient();
-  const { mutate } = useMutation({
-    // データ更新のメイン処理
-    mutationFn: updateBook,
-
-    // mutation 開始前の処理
-    onMutate: async ({ id, newStatus }) => {
-      await queryClient.cancelQueries({ queryKey: ["books"] });
-      const previousBooks = queryClient.getQueryData<Book[]>(["books"]) || [];
-      const newBooks = previousBooks.map((book) =>
-        book.id === id ? { ...book, status: newStatus } : book
-      );
-      queryClient.setQueryData<Book[]>(["books"], newBooks);
-      return { previousBooks };
-    },
-
-    // エラー時に楽観的更新を巻き戻す処理
-    onError: (err, variables, context) => {
-      if (context?.previousBooks) {
-        queryClient.setQueryData<Book[]>(["books"], context.previousBooks);
-      }
-    },
-
-    // 成功/失敗に関わらず完了時の処理
-    onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ["books"] });
-    },
-  });
-
-  // 追加
-  const {
-    data: books = [],
-    isLoading,
-    error,
-  } = useQuery({
-    queryKey: ["books"],
-    queryFn: fetchBooks,
-    select: (data) => data.filter((book) => book.status === props.status),
-  });
-
-  console.log("データ取得"); // デバッグ用
-
-  if (isLoading) {
-    return (
-      <div className="h-10 w-10 animate-spin rounded-full border-4 border-emerald-500 border-t-transparent" />
-    );
-  }
-
-  if (error) {
-    return <div>Error: {error.message}</div>;
-  }
+  const books = props.books.filter((book) => book.status === props.status);
 
   return (
     <section
@@ -77,7 +34,7 @@ const BoardColumn = (props: BoardColumnProps) => {
         e.preventDefault();
         const bookId = e.dataTransfer.getData("bookId");
         if (bookId) {
-          mutate({ id: bookId, newStatus: props.status });
+          props.updateBook({ id: bookId, newStatus: props.status });
         }
       }}
     >
@@ -90,7 +47,7 @@ const BoardColumn = (props: BoardColumnProps) => {
       <div className="space-y-2">
         {/* 書き換え */}
         {books.map((book) => (
-          <BookCard key={book.id} book={book} />
+          <BookCard key={book.id} book={book} deleteBook={props.deleteBook} />
         ))}
       </div>
     </section>
