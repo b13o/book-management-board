@@ -13,7 +13,7 @@ import { Plus } from "lucide-react";
 import { Label } from "./ui/label";
 import { Input } from "./ui/input";
 
-const AddBookDialog = () => {
+const CreateBookDialog = () => {
   const queryClient = useQueryClient();
 
   const { mutate } = useMutation({
@@ -93,4 +93,4 @@ const AddBookDialog = () => {
   );
 };
 
-export default AddBookDialog;
+export default CreateBookDialog;

@@ -1,4 +1,4 @@
-import AddBookDialog from "./CreateBookDialog";
+import CreateBookDialog from "./CreateBookDialog";
 
 const Header = () => {
   return (
@@ -16,7 +16,7 @@ const Header = () => {
       >
         ダミーボタン
       </Button> */}
-      <AddBookDialog />
+      <CreateBookDialog />
     </div>
   );
 };
