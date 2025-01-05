@@ -1,54 +1,20 @@
-import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Card } from "./components/ui/card";
+import BoardColumn from "./components/BoardColumn";
+import Footer from "./components/Footer";
+import Header from "./components/Header";
+import { COLUMNS } from "./constants";
 
-function App() {
+const App = () => {
   return (
-    <>
-      <Card className="w-[400px] h-[400px] bg-slate-300">
-        <Dialog>
-          <DialogTrigger asChild>
-            <Button variant="outline">Edit Profile</Button>
-          </DialogTrigger>
-          <DialogContent className="sm:max-w-[425px]">
-            <DialogHeader>
-              <DialogTitle>Edit profile</DialogTitle>
-              <DialogDescription>
-                Make changes to your profile here. Click save when you're done.
-              </DialogDescription>
-            </DialogHeader>
-            <div className="grid gap-4 py-4">
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="name" className="text-right">
-                  Name
-                </Label>
-                <Input id="name" value="Pedro Duarte" className="col-span-3" />
-              </div>
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="username" className="text-right">
-                  Username
-                </Label>
-                <Input id="username" value="@peduarte" className="col-span-3" />
-              </div>
-            </div>
-            <DialogFooter>
-              <Button type="submit">Save changes</Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
-      </Card>
-    </>
+    <div className="min-h-screen pt-16 pb-8 space-y-8 px-16 bg-gray-100">
+      <Header />
+      <div className="flex gap-6 overflow-x-auto pb-4">
+        {COLUMNS.map((column) => (
+          <BoardColumn key={column.status} status={column.status} />
+        ))}
+      </div>
+      <Footer />
+    </div>
   );
-}
+};
 
 export default App;
