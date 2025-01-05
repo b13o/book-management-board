@@ -1,50 +1,55 @@
-# React + TypeScript + Vite
+<img width="1440" alt="スクリーンショット 2024-10-25 19 08 15" src="https://github.com/user-attachments/assets/93e1c5ff-245a-414e-90f0-b469c7a00161" />
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# 書籍管理アプリ
 
-Currently, two official plugins are available:
+## 概要
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+このプロジェクトでは、Trello 風の書籍管理アプリを構築します。
+本を「欲しい本」「購入した本」「読み終えた本」の 3 つのステータスで管理し、
+ドラッグ&ドロップで本の状態を更新できます。
 
-## Expanding the ESLint configuration
+## 学習目標
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+TanStack Query（React Query）を使用した、サーバーデータの管理について学習します。
 
-- Configure the top-level `parserOptions` property like this:
+API との通信、データのキャッシュ管理、楽観的更新などの実装を確認してください。
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+### 推奨技術
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+このプロジェクトの難易度と趣旨を踏まえて、以下の使用をお勧めします。
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+- vite を用いた React 環境構築
+- TypeScript による型チェック
+- TanStack Query を用いたサーバーの状態管理
+- JSON Server を用いたモック API
+- Drag and Drop API の活用
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+---
+
+## 🎯 お題
+
+- 「ユーザーストーリー」を全て満たすアプリを構築してください。
+- 必要に応じて、スクリーンショットやデモサイトの URL を参照してください。
+- スタイルは、あなた自身で独自にカスタマイズすることが可能です。
+
+### 必須機能
+
+1. **本の一覧表示**：
+   - ステータス（欲しい本、購入した本、読み終えた本）ごとに本を表示する
+2. **本の追加**：
+   - タイトルと著者を入力して、新しい本を追加する
+3. **本のステータス管理**：
+   - ドラッグ&ドロップで本のステータスを更新する
+4. **本の削除**：
+   - 不要な本を一覧から削除する
+
+## ユーザーストーリー
+
+- [ ] ユーザーがサイトにアクセスすると、3 列のボードレイアウト（欲しい本、購入した本、読み終えた本）が表示されている
+- [ ] タイトルと著者名を入力して、新しい本を「欲しい本」リストに追加できる
+- [ ] 追加した本が、適切なステータスの列に表示される
+- [ ] 本のカードをドラッグ&ドロップで異なるステータスの列に移動できる
+- [ ] 本のステータスが更新されると、即座に UI が更新される
+- [ ] 本のカードに削除ボタンがあり、クリックすると一覧から削除できる
+- [ ] データの読み込み中は適切なローディング表示がされる
+- [ ] エラーが発生した場合は、適切なエラーメッセージが表示される
