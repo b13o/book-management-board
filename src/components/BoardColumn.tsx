@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { COLUMNS } from "../constants";
 import { BookStatus } from "../types";
 import { fetchBooks } from "@/utils/api";
+import BookCard from "./BookCard";
 
 type BoardColumnProps = {
   status: BookStatus;
@@ -46,7 +47,7 @@ const BoardColumn = (props: BoardColumnProps) => {
       <div className="space-y-2">
         {/* 書き換え */}
         {books.map((book) => (
-          <p key={book.id}>📚 {book.title}</p>
+          <BookCard key={book.id} book={book} />
         ))}
       </div>
     </section>

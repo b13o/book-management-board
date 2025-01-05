@@ -1,4 +1,4 @@
-import { Button } from "./ui/button";
+import AddBookDialog from "./CreateBookDialog";
 
 const Header = () => {
   return (
@@ -9,13 +9,14 @@ const Header = () => {
         <br />
         読了を記録。シンプルな読書管理アプリです！
       </p>
-      <Button
+      {/* <Button
         onClick={() => {}}
         size={"lg"}
         className="bg-emerald-600 text-white hover:bg-emerald-700"
       >
         ダミーボタン
-      </Button>
+      </Button> */}
+      <AddBookDialog />
     </div>
   );
 };
