@@ -1,4 +1,4 @@
-import { Book } from "../types";
+import { Book, BookStatus } from "../types";
 
 const API_URL = "http://localhost:3001";
 
@@ -32,4 +32,25 @@ export const deleteBook = async (id: string): Promise<void> => {
   if (!response.ok) {
     throw new Error("Failed to delete book");
   }
+};
+
+// 追加
+export const updateBook = async ({
+  id,
+  newStatus,
+}: {
+  id: string;
+  newStatus: BookStatus;
+}): Promise<Book> => {
+  const response = await fetch(`${API_URL}/books/${id}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ status: newStatus }),
+  });
+  if (!response.ok) {
+    throw new Error("Failed to update book status");
+  }
+  return response.json();
 };

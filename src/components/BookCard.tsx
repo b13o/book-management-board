@@ -24,7 +24,19 @@ const BookCard = ({ book }: { book: Book }) => {
   });
 
   return (
-    <Card className="p-4 mb-3 border-gray-400 shadow bg-stone-100 cursor-grab active:cursor-grabbing hover:animate-card-hover transition-all">
+    <Card
+      className="p-4 mb-3 border-gray-400 shadow bg-stone-100 cursor-grab active:cursor-grabbing hover:animate-card-hover transition-all"
+      draggable="true" // 要素をドラッグ可能にする
+      onDragStart={(e) => {
+        // ドラッグ開始時の処理
+        e.dataTransfer.setData("bookId", book.id);
+        e.currentTarget.classList.add("animate-bounce");
+      }}
+      onDragEnd={(e) => {
+        // ドラッグ終了時の処理
+        e.currentTarget.classList.remove("animate-bounce");
+      }}
+    >
       <div className="flex justify-between items-start gap-2">
         <div>
           <h3 className="font-semibold text-sm mb-1">{book.title}</h3>
